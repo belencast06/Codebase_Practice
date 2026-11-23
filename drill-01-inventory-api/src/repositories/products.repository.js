@@ -14,6 +14,7 @@ async function findAll() {
 }
 
 async function findById(id) {
+  //since products p.id returns as string..lets turn into a number first 
   const product = products.find((p) => p.id === id);
   return product ? { ...product } : null;
 }

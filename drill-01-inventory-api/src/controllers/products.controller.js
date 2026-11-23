@@ -4,7 +4,8 @@ const service = require('../services/products.service');
 async function list(req, res, next) {
   try {
     const { page, limit } = req.query;
-    const { category } = req.params;
+    const { category } = req.query; //wrong loco pic
+    //use req.query NOT req params is only from path segments 
 
     const result = await service.listProducts({
       category,
@@ -24,6 +25,7 @@ async function getById(req, res, next) {
     const product = await service.getProduct(Number(req.params.id));
     res.status(200).json(product);
   } catch (err) {
+    console.log(err);
     next(err);
   }
 }
@@ -32,7 +34,8 @@ async function getById(req, res, next) {
 async function create(req, res, next) {
   try {
     const product = await service.createProduct(req.body);
-    res.status(200).json(product);
+    res.status(201).json(product); //just return 201 not 200
+    //show that obj was created not just oh sucess !
   } catch (err) {
     next(err);
   }
