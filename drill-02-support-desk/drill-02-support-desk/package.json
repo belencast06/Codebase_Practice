@@ -1,0 +1,20 @@
+{
+  "name": "drill-02-support-desk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Repo Drill #2 — Support Desk (Express API + React client). Fix the failing tests, then add the search feature if time allows.",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "test": "node scripts/test-all.js",
+    "test:server": "npm test --workspace server",
+    "test:client": "npm test --workspace client",
+    "test:feature": "node scripts/test-all.js --feature",
+    "dev": "concurrently -n server,client -c blue,magenta \"npm run dev --workspace server\" \"npm run dev --workspace client\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
