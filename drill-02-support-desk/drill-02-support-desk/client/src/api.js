@@ -24,7 +24,7 @@ export async function createTicket(data) {
 }
 
 export async function updateTicketStatus(id, status) {
-  const res = await fetch(`${API_BASE}tickets/${id}/status`, {
+  const res = await fetch(`${API_BASE}/tickets/${id}/status`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ status }),

@@ -44,7 +44,7 @@ async function updateStatus(req, res, next) {
 // POST /api/tickets/:id/comments   body: { text }
 async function addComment(req, res, next) {
   try {
-    const ticket = await service.addComment(Number(req.params.id), req.body.comment);
+    const ticket = await service.addComment(Number(req.params.id), req.body.text);
     res.status(201).json(ticket);
   } catch (err) {
     next(err);

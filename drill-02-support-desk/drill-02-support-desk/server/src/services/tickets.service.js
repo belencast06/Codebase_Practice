@@ -9,7 +9,7 @@ const PRIORITY_RANK = { high: 3, medium: 2, low: 1 };
 // Which statuses a ticket may move to from its current status.
 const TRANSITIONS = {
   open: ['in_progress'],
-  in_progress: ['open'],
+  in_progress: ['open','resolved'],
   resolved: ['open'],
 };
 
@@ -30,7 +30,8 @@ function toResponse(ticket) {
 function sortTickets(tickets) {
   return [...tickets].sort(
     (a, b) =>
-      PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority] ||
+      //a-b is ascending , lwo first but should have high first so b -a 
+      PRIORITY_RANK[b.priority] - PRIORITY_RANK[a.priority] ||
       a.createdAt.localeCompare(b.createdAt)
   );
 }
@@ -57,7 +58,7 @@ async function getTicket(id) {
 }
 
 async function createTicket(data) {
-  const { title, description = '', priority = 'medium', assignee } = data || {};
+  const { title, description = '', priority = 'medium', assignee} = data || {};
 
   if (!title || typeof title !== 'string' || !title.trim()) {
     throw new HttpError(400, 'title is required');
@@ -68,9 +69,9 @@ async function createTicket(data) {
   if (!PRIORITIES.includes(priority)) {
     throw new HttpError(400, `priority must be one of: ${PRIORITIES.join(', ')}`);
   }
-  if (!assignee || typeof assignee !== 'string') {
-    throw new HttpError(400, 'assignee is required');
-  }
+  // if (!assignee || typeof assignee !== 'string') {
+  //   throw new HttpError(400, 'assignee is required');
+  // }
 
   const created = await repo.insert({
     title: title.trim(),

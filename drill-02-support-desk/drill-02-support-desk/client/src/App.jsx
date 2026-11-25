@@ -18,7 +18,7 @@ export default function App() {
   async function handleCreate(data) {
     setError('');
     try {
-      const created = createTicket(data);
+      const created = await createTicket(data);
       setTickets((prev) => [created, ...prev]);
     } catch (err) {
       setError(err.message);
@@ -29,9 +29,11 @@ export default function App() {
     setError('');
     try {
       const updated = await updateTicketStatus(id, status);
-      const ticket = tickets.find((t) => t.id === id);
-      ticket.status = updated.status;
-      setTickets(tickets);
+
+      setTickets((prev)=> prev.map((t)=> (t.id === id ? {...t, status: updated.status} : t)));
+      // const ticket = tickets.find((t) => t.id === id);
+      // ticket.status = updated.status;
+      // setTickets(tickets);
     } catch (err) {
       setError(err.message);
     }
